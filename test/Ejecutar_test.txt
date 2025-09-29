@@ -1,3 +1,13 @@
 ======================
 Como ejecutar los test
 ======================
+
+Test API:
+
+1.- Iniciar XAMPP
+
+2.- Pulsar en "Start" en Apache y MySQL
+
+3.- Entrar en Chrome y poner "http://localhost/API-Sprint0/api.php"
+
+4.- Comprobar que se muestran todos los usuarios existentes en la Base de Datos
