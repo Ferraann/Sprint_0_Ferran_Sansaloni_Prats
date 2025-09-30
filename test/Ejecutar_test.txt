@@ -8,6 +8,6 @@ Test API:
 
 2.- Pulsar en "Start" en Apache y MySQL
 
-3.- Entrar en Chrome y poner "http://localhost/API-Sprint0/api.php"
+3.- Entrar en Chrome y poner "http://localhost/Sprint0/api/api.php"
 
 4.- Comprobar que se muestran todos los usuarios existentes en la Base de Datos
