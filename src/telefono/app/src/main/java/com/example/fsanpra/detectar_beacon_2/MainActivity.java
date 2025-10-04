@@ -106,9 +106,15 @@ public class MainActivity extends AppCompatActivity {
         Log.d(ETIQUETA_LOG, " ****************************************************");
         Log.d(ETIQUETA_LOG, " ****** DISPOSITIVO DETECTADO BTLE ****************** ");
         Log.d(ETIQUETA_LOG, " ****************************************************");
+
+        // Declaramos el nombre del dispositivo y su dirección
+        String nombre = "Desconocido";
+        String direccion = bluetoothDevice.getAddress();
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
                 == PackageManager.PERMISSION_GRANTED) {
-            String nombre = bluetoothDevice.getName();
+            // Cuando compruebe que tiene los permisos, cambiará el nombre de "Desconocido" por su nombre real.
+            nombre = bluetoothDevice.getName();
             Log.d(ETIQUETA_LOG, "nombre = " + nombre);
         } else {
             Log.d(ETIQUETA_LOG, "Permiso BLUETOOTH_CONNECT no concedido");
@@ -129,24 +135,59 @@ public class MainActivity extends AppCompatActivity {
         Log.d(ETIQUETA_LOG, " bytes = " + new String(bytes));
         Log.d(ETIQUETA_LOG, " bytes (" + bytes.length + ") = " + Utilidades.bytesToHexString(bytes));
 
+
+        // Creamos la trama de bytes
         TramaIBeacon tib = new TramaIBeacon(bytes);
 
+        // Variables con los datos de la trama
+        String prefijo = Utilidades.bytesToHexString(tib.getPrefijo());
+        String advFlags = Utilidades.bytesToHexString(tib.getAdvFlags());
+        String advHeader = Utilidades.bytesToHexString(tib.getAdvHeader());
+        String companyID = Utilidades.bytesToHexString(tib.getCompanyID());
+        String iBeaconType = Integer.toHexString(tib.getiBeaconType());
+        int iBeaconLength = tib.getiBeaconLength();
+        String iBeaconLengthHex = Integer.toHexString(iBeaconLength);
+        String uuidHex = Utilidades.bytesToHexString(tib.getUUID());
+        String uuidString = Utilidades.bytesToString(tib.getUUID());
+        String majorHex = Utilidades.bytesToHexString(tib.getMajor());
+        int majorInt = Utilidades.bytesToInt(tib.getMajor());
+        String minorHex = Utilidades.bytesToHexString(tib.getMinor());
+        int minorInt = Utilidades.bytesToInt(tib.getMinor());
+        String txPowerHex = Integer.toHexString(tib.getTxPower());
+        int txPower = tib.getTxPower();
+        String bytesHex = Utilidades.bytesToHexString(bytes);
+
+        // Enviados los datos de la trama por el logcat
         Log.d(ETIQUETA_LOG, " ----------------------------------------------------");
-        Log.d(ETIQUETA_LOG, " prefijo  = " + Utilidades.bytesToHexString(tib.getPrefijo()));
-        Log.d(ETIQUETA_LOG, "          advFlags = " + Utilidades.bytesToHexString(tib.getAdvFlags()));
-        Log.d(ETIQUETA_LOG, "          advHeader = " + Utilidades.bytesToHexString(tib.getAdvHeader()));
-        Log.d(ETIQUETA_LOG, "          companyID = " + Utilidades.bytesToHexString(tib.getCompanyID()));
-        Log.d(ETIQUETA_LOG, "          iBeacon type = " + Integer.toHexString(tib.getiBeaconType()));
-        Log.d(ETIQUETA_LOG, "          iBeacon length 0x = " + Integer.toHexString(tib.getiBeaconLength()) + " ( "
-                + tib.getiBeaconLength() + " ) ");
-        Log.d(ETIQUETA_LOG, " uuid  = " + Utilidades.bytesToHexString(tib.getUUID()));
-        Log.d(ETIQUETA_LOG, " uuid  = " + Utilidades.bytesToString(tib.getUUID()));
-        Log.d(ETIQUETA_LOG, " major  = " + Utilidades.bytesToHexString(tib.getMajor()) + "( "
-                + Utilidades.bytesToInt(tib.getMajor()) + " ) ");
-        Log.d(ETIQUETA_LOG, " minor  = " + Utilidades.bytesToHexString(tib.getMinor()) + "( "
-                + Utilidades.bytesToInt(tib.getMinor()) + " ) ");
-        Log.d(ETIQUETA_LOG, " txPower  = " + Integer.toHexString(tib.getTxPower()) + " ( " + tib.getTxPower() + " )");
+        Log.d(ETIQUETA_LOG, " prefijo  = " + prefijo);
+        Log.d(ETIQUETA_LOG, "          advFlags = " + advFlags);
+        Log.d(ETIQUETA_LOG, "          advHeader = " + advHeader);
+        Log.d(ETIQUETA_LOG, "          companyID = " + companyID);
+        Log.d(ETIQUETA_LOG, "          iBeacon type = " + iBeaconType);
+        Log.d(ETIQUETA_LOG, "          iBeacon length 0x = " + iBeaconLengthHex + " ( "
+                + iBeaconLength + " ) ");
+        Log.d(ETIQUETA_LOG, " uuid  = " + uuidHex);
+        Log.d(ETIQUETA_LOG, " uuid  = " + uuidString);
+        Log.d(ETIQUETA_LOG, " major  = " + majorHex + "( "
+                + majorInt + " ) ");
+        Log.d(ETIQUETA_LOG, " minor  = " + minorHex + "( "
+                + minorInt + " ) ");
+        Log.d(ETIQUETA_LOG, " txPower  = " + txPowerHex + " ( " + txPower + " )");
         Log.d(ETIQUETA_LOG, " ****************************************************");
+
+
+        // Guardar datos en bbdd
+        Log.d(">>>>>>", "Dispositivo detectado: " + nombre + " - RSSI: " + rssi);
+
+        // Crear objeto con los datos que vamos a guardar
+        BluetoothDataSender dataSender = new BluetoothDataSender(
+                uuidString,
+                rssi,
+                majorInt,
+                minorInt
+        );
+
+        dataSender.guardarMedida();
 
     } // ()
 
