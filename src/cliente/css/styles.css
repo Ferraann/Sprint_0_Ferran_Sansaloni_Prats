@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos del contenedor */
+.container {
+    width: 90%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+/* Estilos del titulo */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Estilos de la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Estilos del encabezado*/
+thead {
+    background-color: #408bec;
+    color: #fff;
+}
+
+/* Estilos de cada casilla, tanto del encabezado como del cuerpo de la tabla */
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+/* Las filas pares cambian de color */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+td:nth-child(9) {
+    background-color: #D6F2D6;
+}
