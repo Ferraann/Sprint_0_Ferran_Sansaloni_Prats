@@ -15,102 +15,70 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class BluetoothDataSender {
-    private String nombre;
-    private String direccion;
-    private int rssi;
-    private String bytesHex;
-    private String prefijo;
-    private String uuidHex;
     private String uuidString;
+    private int rssi;
     private int major;
     private int minor;
-    private int txPower;
-    private String advFlags;
-    private String advHeader;
-    private String companyID;
-    private int iBeaconType;
-    private int iBeaconLength;
 
     // URL del servidor en Plesk
-    private static final String URL_GUARDAR_MEDICION = "http://localhost/Sprint_0_Ferran_Sansaloni_Prats/src/servidor/api/api.php";
+    private static final String URL_GUARDAR_MEDICION = "http://192.168.1.48/Sprint_0_Ferran_Sansaloni_Prats/src/servidor/api/api.php";
 
     // Constructor
-    public BluetoothDataSender(String nombre, String direccion, int rssi, String bytesHex, String prefijo, String uuidHex, String uuidString,
-                               int major, int minor, int txPower, String advFlags, String advHeader, String companyID, int iBeaconType, int iBeaconLength) {
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.rssi = rssi;
-        this.bytesHex = bytesHex;
-        this.prefijo = prefijo;
-        this.uuidHex = uuidHex;
+    public BluetoothDataSender(String uuidString, int rssi, int major, int minor) {
         this.uuidString = uuidString;
+        this.rssi = rssi;
         this.major = major;
         this.minor = minor;
-        this.txPower = txPower;
-        this.advFlags = advFlags;
-        this.advHeader = advHeader;
-        this.companyID = companyID;
-        this.iBeaconType = iBeaconType;
-        this.iBeaconLength = iBeaconLength;
     }
 
-    // Metodo toString()
-
-
+    // toString
     @Override
     public String toString() {
         return "BluetoothDataSender{" +
-                "nombre='" + nombre + '\'' +
-                ", direccion='" + direccion + '\'' +
+                "uuidString='" + uuidString + '\'' +
                 ", rssi=" + rssi +
-                ", bytesHex='" + bytesHex + '\'' +
-                ", prefijo='" + prefijo + '\'' +
-                ", uuidHex='" + uuidHex + '\'' +
-                ", uuidString='" + uuidString + '\'' +
                 ", major=" + major +
                 ", minor=" + minor +
-                ", txPower=" + txPower +
-                ", advFlags='" + advFlags + '\'' +
-                ", advHeader='" + advHeader + '\'' +
-                ", companyID='" + companyID + '\'' +
-                ", iBeaconType=" + iBeaconType +
-                ", iBeaconLength=" + iBeaconLength +
                 '}';
     }
 
     // Metodo para enviar la medida tomada a Plesk
     public void guardarMedida() {
 
+        // Creamos el cliente OkHttp
         OkHttpClient client = new OkHttpClient();
-        String sensor = "CO2";
-
-        Log.d(">>>>>>", "Enviando medida con minor: " + this.minor);
 
         try {
             // Construir JSON para enviar
             JSONObject json = new JSONObject();
-            json.put("valor", this.minor);
-            json.put("sensor", sensor);
+            json.put("id_sensor", 1);
+            json.put("uuid", uuidString);
+            json.put("rssi", rssi);
+            json.put("major", major);
+            json.put("minor", minor);
+            json.put("latitud", 40.123456);
+            json.put("longitud", -3.123456);
+            json.put("medicionCo2", 1234);
 
-            // Cuerpo de la petición
             RequestBody body = RequestBody.create(
                     json.toString(),
                     MediaType.parse("application/json; charset=utf-8")
             );
 
-            // Petición HTTP POST
             Request request = new Request.Builder()
                     .url(URL_GUARDAR_MEDICION)
                     .post(body)
                     .build();
 
-            // Ejecutar petición de forma asíncrona
+            // Mensajes:
             client.newCall(request).enqueue(new Callback() {
+                // Se ejecuta si va mal
                 @Override
                 public void onFailure(Call call, IOException e) {
                     Log.e(">>>>>>", "Error al enviar medida: " + e.getMessage(), e);
                 }
 
+                // Se ejecuta si va bien
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     if (!response.isSuccessful()) {
@@ -122,6 +90,7 @@ public class BluetoothDataSender {
             });
 
         } catch (Exception e) {
+            // Error
             Log.e(">>>>>>", "Excepción al construir/enviar medida: " + e.getMessage(), e);
         }
     }
