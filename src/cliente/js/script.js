@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const tableBody = document.querySelector("#medicionesTable tbody");
 
     // URL del archivo PHP que recoge las medicones de la base de datos
-    const apiURL = "http://192.168.1.48/Sprint_0_Ferran_Sansaloni_Prats/src/cliente/php/api_listener.php";
+    const apiURL = "http://192.168.1.48/Sprint_0_Ferran_Sansaloni_Prats/src/servidor/api/api_get.php";
 
     // Llama a la api que se encuentra en la url
     fetch(apiURL)
@@ -18,9 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     row.innerHTML = `
                         <td data-label="ID_medicion">${medida.id_medicion}</td>
                         <td data-label="ID_sensor">${medida.id_sensor}</td>
-                        <td data-label="UUID">${medida.uuid}</td>
                         <td data-label="CO2">${medida.medicionCo2}</td>
                         <td data-label="Fecha">${medida.timestamp}</td>
+                        <td data-label="UUID">${medida.uuid}</td>
                     `;
                     tableBody.appendChild(row);
                 });

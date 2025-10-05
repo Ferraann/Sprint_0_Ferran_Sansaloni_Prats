@@ -1,6 +1,7 @@
 <?php
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST');
 
 include 'conexion.php';
 
@@ -23,14 +24,14 @@ $latitud = isset($input['latitud']) ? floatval($input['latitud']) : 0.0;
 $longitud = isset($input['longitud']) ? floatval($input['longitud']) : 0.0;
 $co2 = intval($input['medicionCo2']);
 
-// Insertar en la base de datos
+// Preparar e insertar en la base de datos
 $stmt = $conn->prepare("INSERT INTO mediciones 
     (id_sensor, uuid, rssi, major, minor, latitud, longitud, medicionCo2, timestamp) 
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())");
 
 $stmt->bind_param("isiiiidd", $id_sensor, $uuid, $rssi, $major, $minor, $latitud, $longitud, $co2);
 
-// Mensajes:
+// Ejecución y respuesta
 if ($stmt->execute()) {
     echo json_encode(["success" => true, "mensaje" => "Medida guardada correctamente"]);
 } else {
