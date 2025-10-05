@@ -18,9 +18,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     row.innerHTML = `
                         <td data-label="ID_medicion">${medida.id_medicion}</td>
                         <td data-label="ID_sensor">${medida.id_sensor}</td>
+                        <td data-label="nombre">${medida.nombre}</td>
                         <td data-label="CO2">${medida.medicionCo2}</td>
                         <td data-label="Fecha">${medida.timestamp}</td>
-                        <td data-label="UUID">${medida.uuid}</td>
                     `;
                     tableBody.appendChild(row);
                 });
