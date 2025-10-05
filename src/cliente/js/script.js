@@ -19,11 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         <td data-label="ID_medicion">${medida.id_medicion}</td>
                         <td data-label="ID_sensor">${medida.id_sensor}</td>
                         <td data-label="UUID">${medida.uuid}</td>
-                        <td data-label="RSSI">${medida.rssi}</td>
-                        <td data-label="Major">${medida.major}</td>
-                        <td data-label="Minor">${medida.minor}</td>
-                        <td data-label="Latitud">${medida.latitud}</td>
-                        <td data-label="Longitud">${medida.longitud}</td>
                         <td data-label="CO2">${medida.medicionCo2}</td>
                         <td data-label="Fecha">${medida.timestamp}</td>
                     `;
