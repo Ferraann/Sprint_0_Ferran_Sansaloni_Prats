@@ -11,7 +11,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 
 include 'conexion.php';
-include '../logica/LogicaMediciones.php';
+include '../logica/funciones/LogicaMediciones.php';
 
 // Leer el cuerpo del JSON
 $input = json_decode(file_get_contents("php://input"), true);
