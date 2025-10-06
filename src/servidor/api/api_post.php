@@ -1,44 +1,49 @@
 <?php
+// ============================================================
+//
+// En este fichero recibiremos els json enviado desde el android studio, comprobaremos que los datos son válidos y en
+// ese caso, enviaremos los datos al método de guardarMedicion() de la clase Logica. Si no recibimos bien los datos
+// mandarmos un error.
+//
+// ============================================================
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 
 include 'conexion.php';
+include '../logica/LogicaMediciones.php';
 
 // Leer el cuerpo del JSON
 $input = json_decode(file_get_contents("php://input"), true);
 
-// Validar campos esenciales
-if (!isset($input['nombre']) || !isset($input['uuid']) || !isset($input['rssi']) || !isset($input['medicionCo2'])) {
+// Si no recibo los siguientes datos...
+if (!isset($input['uuid']) || !isset($input['rssi']) || !isset($input['medicionCo2'])) {
+    // ... mando un mensaje diciendo que faltan datos
     echo json_encode(["success" => false, "mensaje" => "Faltan datos"]);
     exit;
 }
 
-// Extraer variables
-$id_sensor = isset($input['id_sensor']) ? intval($input['id_sensor']) : 1;
-$nombre = $input['nombre'];
-$uuid = $input['uuid'];
-$rssi = intval($input['rssi']);
-$major = isset($input['major']) ? intval($input['major']) : 0;
-$minor = isset($input['minor']) ? intval($input['minor']) : 0;
-$latitud = isset($input['latitud']) ? floatval($input['latitud']) : 0.0;
-$longitud = isset($input['longitud']) ? floatval($input['longitud']) : 0.0;
-$co2 = intval($input['medicionCo2']);
+try {
+    // Creamos un objeto de LogicaMediciones
+    $logica = new LogicaMediciones($conn);
+    // Llamamos a guardarMedicion() y le pasamos los datos recibidos como parámetro
+    $id = $logica->guardarMedicion(
+        $input['nombre'],
+        $input['uuid'],
+        intval($input['rssi']),
+        intval(isset($input['major']) ? $input['major'] : 0),
+        intval(isset($input['minor']) ? $input['minor'] : 0),
+        floatval(isset($input['latitud']) ? $input['latitud'] : 0.0),
+        floatval(isset($input['longitud']) ? $input['longitud'] : 0.0),
+        intval($input['medicionCo2']),
+        intval(isset($input['id_sensor']) ? $input['id_sensor'] : 1)
+    );
 
-// Preparar e insertar en la base de datos
-$stmt = $conn->prepare("INSERT INTO mediciones 
-    (id_sensor, nombre, uuid, rssi, major, minor, latitud, longitud, medicionCo2, timestamp) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+    // Mensaje para avisar que la medida se ha guardado correctamente y mostramos el id de la medida
+    echo json_encode(["success" => true, "mensaje" => "Medida guardada correctamente", "id" => $id]);
 
-$stmt->bind_param("issiiiidd", $id_sensor, $nombre, $uuid, $rssi, $major, $minor, $latitud, $longitud, $co2);
-
-// Ejecución y respuesta
-if ($stmt->execute()) {
-    echo json_encode(["success" => true, "mensaje" => "Medida guardada correctamente"]);
-} else {
-    echo json_encode(["success" => false, "mensaje" => "Error al guardar: " . $stmt->error]);
+} catch (Exception $e) {
+    // Error
+    echo json_encode(["success" => false, "mensaje" => $e->getMessage()]);
 }
-
-$stmt->close();
-$conn->close();
 ?>
