@@ -42,6 +42,7 @@ namespace Globales {
 
 
 // --------------------------------------------------------------
+// Espacio de nombres Globales
 // --------------------------------------------------------------
 namespace Globales {
 
@@ -52,6 +53,7 @@ namespace Globales {
 }; // namespace
 
 // --------------------------------------------------------------
+// Inicialización de la placa
 // --------------------------------------------------------------
 void inicializarPlaquita () {
 
@@ -64,10 +66,11 @@ void inicializarPlaquita () {
 // --------------------------------------------------------------
 void setup() {
 
+  // Espera a que el puerto serie esté disponible
   Globales::elPuerto.esperarDisponible();
 
   // 
-  // 
+  // Inicializa la placa
   // 
   inicializarPlaquita();
 
@@ -75,19 +78,17 @@ void setup() {
   // suspendLoop();
 
   // 
-  // 
+  // Enciende el emisor BLE
   // 
   Globales::elPublicador.encenderEmisora();
 
-  // Globales::elPublicador.laEmisora.pruebaEmision();
-  
   // 
-  // 
+  // Inicia el medidor
   // 
   Globales::elMedidor.iniciarMedidor();
 
   // 
-  // 
+  // Espera un segundo
   // 
   esperar( 1000 );
 
@@ -96,6 +97,7 @@ void setup() {
 } // setup ()
 
 // --------------------------------------------------------------
+// Función para parpadear LED de estado
 // --------------------------------------------------------------
 inline void lucecitas() {
   using namespace Globales;
@@ -111,13 +113,14 @@ inline void lucecitas() {
 } // ()
 
 // --------------------------------------------------------------
-// loop ()
+// Variables de loop
 // --------------------------------------------------------------
 namespace Loop {
   uint8_t cont = 0;
 };
 
 // ..............................................................
+// loop()
 // ..............................................................
 void loop () {
 
@@ -126,11 +129,12 @@ void loop () {
 
   cont++;
 
+  // Muestra inicio del loop por puerto serie
   elPuerto.escribir( "\n---- loop(): empieza " );
   elPuerto.escribir( cont );
   elPuerto.escribir( "\n" );
 
-
+  // Parpadeo LED
   lucecitas();
 
   // 
@@ -172,12 +176,12 @@ void loop () {
   // elPublicador.laEmisora.emitirAnuncioIBeaconLibre ( &datos[0], 21 );
   elPublicador.laEmisora.emitirAnuncioIBeaconLibre ( "MolaMolaMolaMolaMolaM", 21 );
 
+  // Espera 2 segundos antes de detener anuncio
   esperar( 2000 );
-
   elPublicador.laEmisora.detenerAnuncio();
   
   // 
-  // 
+  // Muestra fin del loop
   // 
   elPuerto.escribir( "---- loop(): acaba **** " );
   elPuerto.escribir( cont );

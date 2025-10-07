@@ -21,22 +21,28 @@
 #include "ServicioEnEmisora.h"
 
 // ----------------------------------------------------------
+// Clase EmisoraBLE
 // ----------------------------------------------------------
 class EmisoraBLE {
 private:
 
+  // Nombre que se anunciará por BLE
   const char * nombreEmisora;
+  // ID del fabricante
   const uint16_t fabricanteID;
+  // Potencia de transmisión
   const int8_t txPower;
 
 public:
 
   // .........................................................
+  // Tipos de callback para conexión y desconexión
   // .........................................................
   using CallbackConexionEstablecida = void ( uint16_t connHandle );
   using CallbackConexionTerminada = void ( uint16_t connHandle, uint8_t reason);
 
   // .........................................................
+  // Constructor
   // .........................................................
   EmisoraBLE( const char * nombreEmisora_, const uint16_t fabricanteID_,
 			  const int8_t txPower_ ) 
@@ -71,6 +77,7 @@ public:
   */
 	
   // .........................................................
+  // Encender la emisora BLE
   // .........................................................
   void encenderEmisora() {
 	// Serial.println ( "Bluefruit.begin() " );
@@ -81,6 +88,9 @@ public:
   } // ()
 
   // .........................................................
+  // Encender con callbacks de conexión/desconexión
+  //		encenderEmisora() 
+  //			<--
   // .........................................................
   void encenderEmisora( CallbackConexionEstablecida cbce,
 						CallbackConexionTerminada cbct ) {
@@ -93,6 +103,9 @@ public:
   } // ()
 
   // .........................................................
+  // Detener anuncio actual
+  //		detenerAnuncio()
+  //			<--
   // .........................................................
   void detenerAnuncio() {
 
@@ -111,11 +124,12 @@ public:
   } // ()
 
   // .........................................................
+  // Emitir iBeacon estándar
   // .........................................................
   void emitirAnuncioIBeacon( uint8_t * beaconUUID, int16_t major, int16_t minor, uint8_t rssi ) {
 
 	//
-	//
+	// Detiene el anuncio
 	//
 	(*this).detenerAnuncio();
 	
@@ -261,6 +275,9 @@ public:
   } // ()
 
   // .........................................................
+  // Añadir servicios BLE
+  // ServicioEnEmisora: servicio --> anyadirServicio()
+  //											--> booleano
   // .........................................................
   bool anyadirServicio( ServicioEnEmisora & servicio ) {
 
@@ -280,6 +297,8 @@ public:
 
   
   // .........................................................
+  //	ServicioEnEmisora: servicio --> anyadirServicioConSusCaracteristicas() 
+  //													--> booleano
   // .........................................................
   bool anyadirServicioConSusCaracteristicas( ServicioEnEmisora & servicio ) { 
 	return (*this).anyadirServicio( servicio );
@@ -312,18 +331,23 @@ public:
   } // ()
 
   // .........................................................
+  // 	CallbackConexionEstablecida: cb --> instalarCallbackConexionEstablecida()
+  //												<--
   // .........................................................
   void instalarCallbackConexionEstablecida( CallbackConexionEstablecida cb ) {
 	Bluefruit.Periph.setConnectCallback( cb );
   } // ()
 
   // .........................................................
+  //	CallbackConexionEstablecida: cb --> instalarCallbackConexionTerminada()
+  //												<--
   // .........................................................
   void instalarCallbackConexionTerminada( CallbackConexionTerminada cb ) {
 	Bluefruit.Periph.setDisconnectCallback( cb );
   } // ()
 
   // .........................................................
+  // Obtener conexión por handle
   // .........................................................
   BLEConnection * getConexion( uint16_t connHandle ) {
 	return Bluefruit.Connection( connHandle );
