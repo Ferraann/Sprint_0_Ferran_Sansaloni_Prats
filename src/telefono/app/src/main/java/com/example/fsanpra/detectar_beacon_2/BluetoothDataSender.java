@@ -47,7 +47,7 @@ public class BluetoothDataSender {
     private static final boolean MODO_OFFLINE = false; // ← cambia a true para usar la lógica fake
 
     // URL del fichero php donde enviar los datos
-    private static final String URL_GUARDAR_MEDICION = "http://192.168.1.48/Sprint_0_Ferran_Sansaloni_Prats/src/servidor/api/api_post.php";
+    private static final String URL_GUARDAR_MEDICION = "http://172.20.10.2/Sprint_0_Ferran_Sansaloni_Prats/src/servidor/api/api_post.php";
 
     // --------------------------------------------------------------
     // Constructor
