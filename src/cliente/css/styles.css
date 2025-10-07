@@ -1,3 +1,4 @@
+/* Estilos del cuerpo de la pagina */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -5,7 +6,7 @@ body {
     padding: 0;
 }
 
-/* Estilos del contenedor */
+/* Estilos del contenedor principal */
 .container {
     width: 90%;
     margin: 20px auto;
@@ -45,6 +46,7 @@ tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
+/* Estilos de la columna numero 4 (es la columna donde muestro los datos del C02 --> 1234) */
 td:nth-child(4) {
     background-color: #D6F2D6;
 }

@@ -1,19 +1,26 @@
 <?php
-// ============================================================
-//
-// En este fichero recibiremos els json enviado desde el android studio, comprobaremos que los datos son válidos y en
-// ese caso, enviaremos los datos al método de guardarMedicion() de la clase Logica. Si no recibimos bien los datos
-// mandarmos un error.
-//
-// ============================================================
+// ------------------------------------------------------------------
+// Fichero: api_post.php
+// Autor: Ferran Sansaloni Prats
+// Fecha: 04/10/2025
+// ------------------------------------------------------------------
+// Descripción:
+//   Este fichero recibe un JSON enviado desde Android Studio,
+//   valida los datos recibidos y, en caso de ser correctos,
+//   los envía al método guardarMedicion() de la clase LogicaMediciones.
+//   Si falta algún dato, devuelve un error.
+// ------------------------------------------------------------------
+
+// Configuración de cabeceras HTTP
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 
+// Incluimos los ficheros necesarios
 include 'conexion.php';
 include '../logica/funciones/LogicaMediciones.php';
 
-// Leer el cuerpo del JSON
+// Convierte el cuerpo recibido en un array asociativo de php
 $input = json_decode(file_get_contents("php://input"), true);
 
 // Si no recibo los siguientes datos...
@@ -46,4 +53,8 @@ try {
     // Error
     echo json_encode(["success" => false, "mensaje" => $e->getMessage()]);
 }
+// ------------------------------------------------------------------
+// ------------------------------------------------------------------
+// ------------------------------------------------------------------
+// ------------------------------------------------------------------
 ?>

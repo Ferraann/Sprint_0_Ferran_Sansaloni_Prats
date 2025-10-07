@@ -1,3 +1,13 @@
+// ------------------------------------------------------------------
+// Fichero: script.js
+// Autor: Ferran Sansaloni Prats
+// Fecha: 6/10/2025
+// ------------------------------------------------------------------
+// Descripción:
+//   Este fichero se encarga de cargar las mediciones desde la API
+//   PHP y mostrarlas en la tabla HTML correspondiente.
+// ------------------------------------------------------------------
+
 document.addEventListener("DOMContentLoaded", () => {
     const tableBody = document.querySelector("#medicionesTable tbody");
 
@@ -15,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 // ... recorre los datos y los mete a la tabla de HTML
                 data.mediciones.forEach(medida => {
                     const row = document.createElement("tr");
+                    // Columnas de la tabla de mediciones
                     row.innerHTML = `
                         <td data-label="ID_medicion">${medida.id_medicion}</td>
                         <td data-label="ID_sensor">${medida.id_sensor}</td>
@@ -35,3 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tableBody.innerHTML = `<tr><td colspan="10">Error al cargar los datos</td></tr>`;
         });
 });
+// ------------------------------------------------------------------
+// ------------------------------------------------------------------
+// ------------------------------------------------------------------
+// ------------------------------------------------------------------

@@ -1,18 +1,35 @@
 <?php
 
+// ------------------------------------------------------------------
+// Fichero: test_mediciones.php
+// Autor: Ferran Sansaloni Prats
+// Fecha: 05/10/2025
+// ------------------------------------------------------------------
+// Descripción:
+//   Script de prueba para la clase LogicaMediciones. Realiza los
+//   siguientes tests:
+//     1. Inserta una medición en la base de datos.
+//     2. Recupera mediciones existentes.
+//     3. Muestra el contenido recuperado en formato JSON.
+//     4. Limpieza: elimina la medición de prueba insertada.
+// ------------------------------------------------------------------
+
+// ------------------------------------------------------------------
+// INCLUDES NECESARIOS
+// ------------------------------------------------------------------
 include '../../api/conexion.php';
 include '../funciones/LogicaMediciones.php';
 
-// Crear conexión
+// Crear objeto logica
 $logica = new LogicaMediciones($conn);
 
-// =========================
+// -------------------------
 // TEST 1: Insertar medición
-// =========================
+// -------------------------
 echo "Test 1: Guardar medición --> \t";
 
 try {
-    // Le pasamos datos datos fijos como parámetro a la funcion guadarMedicion()
+    // Le pasamos datos fijos como parámetro a la funcion guadarMedicion()
     $id = $logica->guardarMedicion(
         "TestSensor",
         "UUID-TEST-999",
@@ -59,5 +76,8 @@ if (!empty($id)) {
 }
 
 $conn->close();
-
+// ------------------------------------------------------------------
+// ------------------------------------------------------------------
+// ------------------------------------------------------------------
+// ------------------------------------------------------------------
 ?>
