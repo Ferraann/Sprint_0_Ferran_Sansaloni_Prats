@@ -10,11 +10,13 @@
 #define PUERTO_SERIE_H_INCLUIDO
 
 // ----------------------------------------------------------
+// Clase PuertoSerie
 // ----------------------------------------------------------
 class PuertoSerie  {
 
 public:
   // .........................................................
+  // Constructor
   // .........................................................
   PuertoSerie (long baudios) {
 	Serial.begin( baudios );
@@ -22,6 +24,7 @@ public:
   } // ()
 
   // .........................................................
+  // Esperar a que el puerto serie este disponible
   // .........................................................
   void esperarDisponible() {
 
@@ -32,6 +35,7 @@ public:
   } // ()
 
   // .........................................................
+  // Escribo el mensaje en el puerto serie
   // .........................................................
   template<typename T>
   void escribir (T mensaje) {

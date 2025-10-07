@@ -8,6 +8,7 @@
 #define PUBLICADOR_H_INCLUIDO
 
 // --------------------------------------------------------------
+// Clase Publicador
 // --------------------------------------------------------------
 class Publicador {
 
@@ -15,6 +16,7 @@ class Publicador {
   // ............................................................
 private:
 
+	// UUID del beacon
   uint8_t beaconUUID[16] = { 
 	'E', 'P', 'S', 'G', '-', 'G', 'T', 'I', 
 	'-', 'P', 'R', 'O', 'Y', '-', '3', 'A'
@@ -23,6 +25,7 @@ private:
   // ............................................................
   // ............................................................
 public:
+	// Emisora BLE asociada al Publicador
   EmisoraBLE laEmisora {                                                                                                                        
 	"fistro", //  nombre emisora
 	  0x004c, // fabricanteID (Apple)
@@ -36,6 +39,7 @@ public:
 public:
 
   // ............................................................
+  // Tipos de mediciones soportadas
   // ............................................................
   enum MedicionesID  {
 	CO2 = 11,
@@ -44,6 +48,7 @@ public:
   };
 
   // ............................................................
+  // Constructor
   // ............................................................
   Publicador( ) {
 	// ATENCION: no hacerlo aquí. (*this).laEmisora.encenderEmisora();
@@ -51,12 +56,14 @@ public:
   } // ()
 
   // ............................................................
+  // Encender la emisora BLE
   // ............................................................
   void encenderEmisora() {
 	(*this).laEmisora.encenderEmisora();
   } // ()
 
   // ............................................................
+  // Publicar valor de CO2 mediante iBeacon
   // ............................................................
   void publicarCO2( int16_t valorCO2, uint8_t contador,
 					long tiempoEspera ) {
@@ -93,6 +100,7 @@ public:
   } // ()
 
   // ............................................................
+  // Publicar valor de temperatura mediante iBeacon
   // ............................................................
   void publicarTemperatura( int16_t valorTemperatura,
 							uint8_t contador, long tiempoEspera ) {

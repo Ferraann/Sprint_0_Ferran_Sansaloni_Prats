@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const tableBody = document.querySelector("#medicionesTable tbody");
 
     // URL del archivo PHP que recoge las medicones de la base de datos
-    const apiURL = "http://192.168.1.48/Sprint_0_Ferran_Sansaloni_Prats/src/servidor/api/api_get.php";
+    const apiURL = "http://172.20.10.2/Sprint_0_Ferran_Sansaloni_Prats/src/servidor/api/api_get.php";
 
     // Llama a la api que se encuentra en la url
     fetch(apiURL)
