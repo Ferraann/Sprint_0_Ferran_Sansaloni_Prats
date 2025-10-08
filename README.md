@@ -1,6 +1,143 @@
 # Sprint_0_Ferran_Sansaloni_Prats
-Repositorio con los archivos correspondientes al Sprint 0.
 
-- Carpeta src = Aquí se encuentra el codigo de cada parte del sistema: src/arduino, src/telefono, src/servidor, src/cliente, etc.
-- Carpeta doc = Aquí se encuentan todos los documentos necesarios para entender cada parte del proyecto, diseños,
-- Carpeta test = Aquí se encuentran todos los test para probar que cada proceso funciona correctamente. También habrá un .txt indicando como ejecutar los test.
+Repositorio correspondiente al **Sprint 0** del proyecto.  
+En este sprint se sientan las bases técnicas del sistema, haciendo ingeniería inversa de todo el código dado y dando los primeros pasos con la API Rest y la base de datos.
+
+---
+
+# Estructura del repositorio
+
+El repositorio está organizado en varias carpetas, cada una con una función específica dentro del proyecto:
+
+Sprint_0_Ferran_Sansaloni_Prats/
+|
+|--- doc
+|     |-- Documentación_API.pdf
+|     |-- Documentación_Diseños.pdf
+|     |-- Documentación_Test.pdf
+|     |-- diseños
+|             |-- Diseño_Android.pdf
+|             |-- Diseño_BBDD.pdf
+|             |-- Diseño_Logica_Negocio.pdf
+|             |-- Diseño_Proyecto.pdf
+|
+|--- src
+|     |-- Arduino
+|     |       |-- ._HolaMundoIBeacon.ino
+|     |       |-- EmisoraBLE.c
+|     |       |-- LED.c
+|     |       |-- Medidor.c
+|     |       |-- Publicador.c
+|     |       |-- PuertoSerie.c
+|     |       |-- ServicioEnEmisora.c
+|     |       |-- HolaMundoIBeacon
+|     |                   |-- HolaMundoIBeacon.ino
+|     |
+|     |-- cliente
+|     |       |-- index.html
+|     |       |-- css
+|     |       |    |-- styles.css
+|     |       |-- js
+|     |       |    |-- script.js
+|     |
+|     |-- servidor
+|     |       |-- api
+|     |       |    |-- api_get.php
+|     |       |    |-- api_post.php
+|     |       |    |-- conexion.php
+|     |       |-- bd
+|     |       |    |-- mediciones_sprint0.sql
+|     |       |-- logica
+|     |       |    |-- funciones
+|     |       |    |     |-- LogicaMediciones.php
+|     |       |    |-- test
+|     |       |    |     |-- mainTest1.php
+|     |
+|     |-- telefono
+|     |       |-- .gradle
+|     |       |      |-- ...
+|     |       |-- .idea
+|     |       |      |-- ...
+|     |       |-- app
+|     |       |      |-- ...
+|     |       |-- gradle
+|     |       |      |-- ...
+|     |       |-- ...
+|
+|--- test
+|     |-- mainTest1.php
+|
+|-- README
+|
+|----------------------------------------------------------------
+
+---
+
+# Objetivo del Sprint 0
+
+El objetivo principal de este sprint es establecer la **base del sistema completo**, garantizando la correcta comunicación entre todos los componentes:
+
+- Sensor (Arduino - nRF52840)
+- Servidor (API Rest en PHP)
+- Android Studio (teléfono)
+- Base de datos (phpMyAdmin)
+
+---
+
+# API Rest
+
+En esta parte se implementan los endpoints básicos:
+- **GET /api_get.php** → Devuelve todas las mediciones registradas o filtradas por sensor a partir del id del sensor.
+- **POST /api_post.php** → Recibe mediciones desde el Android Studio y las guarda en la base de datos.
+
+Toda la lógica de negocio se gestiona mediante la clase **LogicaMediciones.php**, encargada de insertar y recuperar datos.
+
+Consulta la documentación de la API en:
+**/doc/Documentación_API.pdf**
+
+---
+
+# Lógica de negocio
+
+- La clase **LogicaMediciones** incluye:
+    - Un **constructor** que inicializa la conexión con la base de datos.
+    - Métodos para **guardar** y **recuperar** mediciones.
+
+Consulta la documentación de la Lógica de Negocio en:
+**/doc/Documentación_Logica_Negocio.pdf**
+
+---
+
+# Test
+
+Dentro de la carpeta **test/** se incluye el script para validar que cada proceso funciona correctamente:
+- Conexión con la base de datos.
+- Inserción de una nueva medición **POST**.
+- Lectura de la medición **GET**.
+- Eliminación de la medición.
+
+Consulta la documentación de los Test en:
+**/doc/Documentación_Test.pdf**
+
+---
+
+# Documentación adicional
+
+Toda la documentación y los diagramas se encuentran en la carpeta **/doc**
+Incluye:
+- Diseños de todos los métodos y clases de cada parte del proyecto.
+- Documentación de endpoints y ejemplos de uso
+- Explicación paso a paso del funcionamiento de la API y de la lógica de negocio.
+
+---
+
+# Autor
+
+**Ferran Sansaloni Prats**
+**Fecha de creación: 30/09/2025**
+**Fecha de modificación: 08/10/2025**
+
+---
+
+**Nota Importante:**
+Todos los archivos y diseños están disponibles en el repositorio de GitHub para una mejor visualización.
