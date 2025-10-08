@@ -73,9 +73,9 @@ public class MainActivity extends AppCompatActivity {
     //                                     <--
     // --------------------------------------------------------------
     private void buscarTodosLosDispositivosBTLE() {
-        Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): empieza ");
+        // Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): empieza ");
 
-        Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): instalamos scan callback ");
+        // Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): instalamos scan callback ");
 
         // Configura callback para procesar los resultados
         this.callbackDelEscaneo = new ScanCallback() {
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onScanResult( int callbackType, ScanResult resultado ) {
                 super.onScanResult(callbackType, resultado);
-                Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): onScanResult() ");
+                // Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): onScanResult() ");
 
                 mostrarInformacionDispositivoBTLE( resultado );
             }
@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         byte[] bytes = resultado.getScanRecord().getBytes();
         int rssi = resultado.getRssi();
 
+        Log.d("", " ");
         Log.d(ETIQUETA_LOG, " ****************************************************");
         Log.d(ETIQUETA_LOG, " ****** DISPOSITIVO DETECTADO BTLE ****************** ");
         Log.d(ETIQUETA_LOG, " ****************************************************");
@@ -155,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(ETIQUETA_LOG, "Permiso BLUETOOTH_CONNECT no concedido");
         }
 
-        Log.d(ETIQUETA_LOG, " toString = " + bluetoothDevice.toString());
+        // Log.d(ETIQUETA_LOG, " toString = " + bluetoothDevice.toString());
 
         /*
         ParcelUuid[] puuids = bluetoothDevice.getUuids();
@@ -164,11 +165,11 @@ public class MainActivity extends AppCompatActivity {
            // Log.d(ETIQUETA_LOG, " uuid = " + puuids[0].toString());
         }*/
 
-        Log.d(ETIQUETA_LOG, " dirección = " + bluetoothDevice.getAddress());
-        Log.d(ETIQUETA_LOG, " rssi = " + rssi );
+        // Log.d(ETIQUETA_LOG, " dirección = " + bluetoothDevice.getAddress());
+        // Log.d(ETIQUETA_LOG, " rssi = " + rssi );
 
-        Log.d(ETIQUETA_LOG, " bytes = " + new String(bytes));
-        Log.d(ETIQUETA_LOG, " bytes (" + bytes.length + ") = " + Utilidades.bytesToHexString(bytes));
+        // Log.d(ETIQUETA_LOG, " bytes = " + new String(bytes));
+        // Log.d(ETIQUETA_LOG, " bytes (" + bytes.length + ") = " + Utilidades.bytesToHexString(bytes));
 
 
         // Creamos la trama de bytes
@@ -201,27 +202,27 @@ public class MainActivity extends AppCompatActivity {
         String bytesHex = Utilidades.bytesToHexString(bytes);
 
         // Enviados los datos de la trama por el logcat
-        Log.d(ETIQUETA_LOG, " ----------------------------------------------------");
-        Log.d(ETIQUETA_LOG, " prefijo  = " + prefijo);
-        Log.d(ETIQUETA_LOG, "          advFlags = " + advFlags);
-        Log.d(ETIQUETA_LOG, "          advHeader = " + advHeader);
-        Log.d(ETIQUETA_LOG, "          companyID = " + companyID);
-        Log.d(ETIQUETA_LOG, "          iBeacon type = " + iBeaconType);
-        Log.d(ETIQUETA_LOG, "          iBeacon length 0x = " + iBeaconLengthHex + " ( "
-                + iBeaconLength + " ) ");
-        Log.d(ETIQUETA_LOG, " uuid  = " + uuidHex);
+        // Log.d(ETIQUETA_LOG, " ----------------------------------------------------");
+        // Log.d(ETIQUETA_LOG, " prefijo  = " + prefijo);
+        // Log.d(ETIQUETA_LOG, "          advFlags = " + advFlags);
+        // Log.d(ETIQUETA_LOG, "          advHeader = " + advHeader);
+        // Log.d(ETIQUETA_LOG, "          companyID = " + companyID);
+        // Log.d(ETIQUETA_LOG, "          iBeacon type = " + iBeaconType);
+        // Log.d(ETIQUETA_LOG, "          iBeacon length 0x = " + iBeaconLengthHex + " ( "
+        //         + iBeaconLength + " ) ");
+        // Log.d(ETIQUETA_LOG, " uuid  = " + uuidHex);
         Log.d(ETIQUETA_LOG, " uuid  = " + uuidString);
         Log.d(ETIQUETA_LOG, " major  = " + majorHex + "( "
                 + majorInt + " ) ");
         Log.d(ETIQUETA_LOG, " minor  = " + minorHex + "( "
                 + minorInt + " ) ");
-        Log.d(ETIQUETA_LOG, " txPower  = " + txPowerHex + " ( " + txPower + " )");
-        Log.d(ETIQUETA_LOG, " ****************************************************");
+        // Log.d(ETIQUETA_LOG, " txPower  = " + txPowerHex + " ( " + txPower + " )");
+        // Log.d(ETIQUETA_LOG, " ****************************************************");
 
 
         // Guardar datos en bbdd
 
-        Log.d(">>>>>>", "Dispositivo detectado: " + nombre + " - RSSI: " + rssi);
+        // Log.d(">>>>>>", "Dispositivo detectado: " + nombre + " - RSSI: " + rssi);
 
         // Crear objeto con los datos que vamos a guardar
         BluetoothDataSender dataSender = new BluetoothDataSender(
@@ -247,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
     private void buscarEsteDispositivoBTLE(final String dispositivoBuscado ) {
         Log.d(ETIQUETA_LOG, " buscarEsteDispositivoBTLE(): empieza ");
 
-        Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): instalamos scan callback ");
+        // Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): instalamos scan callback ");
 
 
         // super.onScanResult(ScanSettings.SCAN_MODE_LOW_LATENCY, result); para ahorro de energía
@@ -258,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onScanResult( int callbackType, ScanResult resultado ) {
                 super.onScanResult(callbackType, resultado);
-                Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): onScanResult() ");
+                // Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): onScanResult() ");
 
                 mostrarInformacionDispositivoBTLE( resultado );
             } // ()
@@ -267,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onBatchScanResults(List<ScanResult> results) {
                 super.onBatchScanResults(results);
-                Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): onBatchScanResults() ");
+                // Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): onBatchScanResults() ");
 
             } // ()
 
@@ -275,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onScanFailed(int errorCode) {
                 super.onScanFailed(errorCode);
-                Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): onScanFailed() ");
+                // Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): onScanFailed() ");
 
             } // ()
         };
@@ -362,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
         //this.buscarEsteDispositivoBTLE( Utilidades.stringToUUID( "EPSG-GTI-PROY-3A" ) );
 
         //this.buscarEsteDispositivoBTLE( "EPSG-GTI-PROY-3A" );
-        this.buscarEsteDispositivoBTLE( "Grupo 6" );
+        this.buscarEsteDispositivoBTLE( "Govee_H6076_317F" );
 
     } // ()
 
@@ -497,7 +498,7 @@ public class MainActivity extends AppCompatActivity {
             // Aqui confirma si se han concedido todos los permisos, si es asi, muestra "Permisos concedidos" si no, muestra
             // "Permisos NO concedidos"
             if (todosConcedidos) {
-                Log.d(ETIQUETA_LOG, "Permisos concedidos");
+                // Log.d(ETIQUETA_LOG, "Permisos concedidos");
                 inicializarBlueTooth(); // ahora que hay permisos, inicializamos
             } else {
                 Log.d(ETIQUETA_LOG, "Permisos NO concedidos");
