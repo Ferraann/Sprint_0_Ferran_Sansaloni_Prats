@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onScanResult(callbackType, resultado);
                 // Log.d(ETIQUETA_LOG, " buscarTodosLosDispositivosBTL(): onScanResult() ");
 
-                mostrarInformacionDispositivoBTLE( resultado );
+                mostrarInformacionDispositivoBTLE( resultado, false );
             }
 
             // Se deberia usar para cuando recibe una lista de resultados en lote. Pero por ahora solo escribe en el log, no procesa la lista results
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
     //   ScanResult: resultado --> mostrarInformacionDispositivoBTLE()
     //                                          <--
     // --------------------------------------------------------------
-    private void mostrarInformacionDispositivoBTLE( ScanResult resultado ) {
+    private void mostrarInformacionDispositivoBTLE( ScanResult resultado, boolean guardarEnBBDD ) {
 
         BluetoothDevice bluetoothDevice = resultado.getDevice();
         byte[] bytes = resultado.getScanRecord().getBytes();
@@ -150,8 +150,10 @@ public class MainActivity extends AppCompatActivity {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT)
                 == PackageManager.PERMISSION_GRANTED) {
             // Cuando compruebe que tiene los permisos, cambiará el nombre de "Desconocido" por su nombre real.
-            nombre = bluetoothDevice.getName();
-            Log.d(ETIQUETA_LOG, "nombre = " + nombre);
+            String nombreTemp = bluetoothDevice.getName();
+            if (nombreTemp != null && !nombreTemp.isEmpty()) {
+                nombre = nombreTemp;
+            }
         } else {
             Log.d(ETIQUETA_LOG, "Permiso BLUETOOTH_CONNECT no concedido");
         }
@@ -201,12 +203,17 @@ public class MainActivity extends AppCompatActivity {
         int txPower = tib.getTxPower();
         String bytesHex = Utilidades.bytesToHexString(bytes);
 
+        if (uuid.equals("EPSG-GTI-PROY-3A")) {
+            nombre = "fistro";
+        }
+
         // Enviados los datos de la trama por el logcat
         // Log.d(ETIQUETA_LOG, " ----------------------------------------------------");
+        Log.d(ETIQUETA_LOG, " nombre = " + nombre);
         // Log.d(ETIQUETA_LOG, " prefijo  = " + prefijo);
+        Log.d(ETIQUETA_LOG, " rssi  = " + rssi);
         // Log.d(ETIQUETA_LOG, "          advFlags = " + advFlags);
         // Log.d(ETIQUETA_LOG, "          advHeader = " + advHeader);
-        // Log.d(ETIQUETA_LOG, "          companyID = " + companyID);
         // Log.d(ETIQUETA_LOG, "          iBeacon type = " + iBeaconType);
         // Log.d(ETIQUETA_LOG, "          iBeacon length 0x = " + iBeaconLengthHex + " ( "
         //         + iBeaconLength + " ) ");
@@ -216,7 +223,8 @@ public class MainActivity extends AppCompatActivity {
                 + majorInt + " ) ");
         Log.d(ETIQUETA_LOG, " minor  = " + minorHex + "( "
                 + minorInt + " ) ");
-        // Log.d(ETIQUETA_LOG, " txPower  = " + txPowerHex + " ( " + txPower + " )");
+        Log.d(ETIQUETA_LOG, " companyID = " + companyID);
+        Log.d(ETIQUETA_LOG, " txPower  = " + txPowerHex + " ( " + txPower + " )");
         // Log.d(ETIQUETA_LOG, " ****************************************************");
 
 
@@ -224,16 +232,20 @@ public class MainActivity extends AppCompatActivity {
 
         // Log.d(">>>>>>", "Dispositivo detectado: " + nombre + " - RSSI: " + rssi);
 
-        // Crear objeto con los datos que vamos a guardar
-        BluetoothDataSender dataSender = new BluetoothDataSender(
-                nombre,
-                uuidString,
-                rssi,
-                majorInt,
-                minorInt
-        );
+        // Si el booleano guardarEnBBDD estrue creo objeto con los datos que vamos a guardar
+        if(guardarEnBBDD) {
+            BluetoothDataSender dataSender = new BluetoothDataSender(
+                    nombre,
+                    uuidString,
+                    rssi,
+                    majorInt,
+                    minorInt
+            );
 
-        dataSender.guardarMedida();
+            dataSender.guardarMedida();
+        } else {
+            Log.d(ETIQUETA_LOG, " [INFO] Solo se muestra, no se guarda en la base de datos.");
+        }
 
     } // ()
 
@@ -261,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onScanResult(callbackType, resultado);
                 // Log.d(ETIQUETA_LOG, "  buscarEsteDispositivoBTLE(): onScanResult() ");
 
-                mostrarInformacionDispositivoBTLE( resultado );
+                mostrarInformacionDispositivoBTLE( resultado, true );
             } // ()
 
             // Metodo para cuando lleguen varios dispositivos a la vez. No hace nada de momento.
@@ -363,7 +375,7 @@ public class MainActivity extends AppCompatActivity {
         //this.buscarEsteDispositivoBTLE( Utilidades.stringToUUID( "EPSG-GTI-PROY-3A" ) );
 
         //this.buscarEsteDispositivoBTLE( "EPSG-GTI-PROY-3A" );
-        this.buscarEsteDispositivoBTLE( "Govee_H6076_317F" );
+        this.buscarEsteDispositivoBTLE( "fistro" );
 
     } // ()
 
